@@ -12,7 +12,7 @@ node{
 
     stage('build'){
         win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
-        echo "ls"
+        bat "dir"
         compiler.addProject(Config["solution"])
                 .setToRebuild()
                 .run();
