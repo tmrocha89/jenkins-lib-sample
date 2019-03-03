@@ -1,6 +1,6 @@
-Config = [
-    "type" => "c#",
-    "solution" => "DeleteMe_Test001.sln"
+def Config = [
+    "type" : "c#",
+    "solution" : "DeleteMe_Test001.sln"
 ]
 
 
