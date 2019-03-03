@@ -10,9 +10,9 @@ node{
     win.thebatman.tmrjenkinslib.platformRunners.IPlatformRunner runner = new win.thebatman.tmrjenkinslib.platformRunners.WindowsPlatformRunner(this);
 
     stage('checkout'){
-        checkout scm
+        win.thebatman.tmrjenkinslib.versionControl.IVersionControlSystem git = new win.thebatman.tmrjenkinslib.versionControl.GitVersionControlSystem(this, runner);
+        git.CloneCurrentProject()
     }
-
 
     stage('build'){
         win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
