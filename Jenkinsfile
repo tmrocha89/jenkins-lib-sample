@@ -16,12 +16,22 @@ node{
 
     stage('build'){
         win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
-        bat "dir"
         compiler.addProject(Config["solution"])
                 .setToRebuild()
                 .run();
     }
 
+    stage('Tests'){
+        echo "Not implemented yet"
+    }
+
+    stage('Deploy'){
+        echo "Deploying app"
+    }
+
+    stage('Checking Availability'){
+        echo "Checking if app is alive"
+    }
 
 
 }
