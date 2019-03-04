@@ -27,15 +27,22 @@ node{
 
     stage('Deploy'){
         echo "Deploying app"
-        win.thebatman.tmrjenkinslib.compression.ICompressionBuilder compression = new win.thebatman.tmrjenkinslib.compression.ZipCompressionBuilder(this);
-        compression.setFileName("app.zip")
-                    .setDirectory("./")
-                    .compress()
+        //win.thebatman.tmrjenkinslib.compression.ICompressionBuilder compression = new win.thebatman.tmrjenkinslib.compression.ZipCompressionBuilder(this);
+        //compression.setFileName("app.zip")
+        //            .setDirectory("./")
+        //            .compress()
+
+        writeFile file: './teste.publishsettings', text: 'asdads'
+
+        win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
+        compiler.addProject(Config["solution"])
+        .setToRebuild()
+        .addParameter("/p:DeployOnBuild=true")
+        .addParameter("/p:PublishProfile=testtmdeploy - Web Deploy")
     }
 
     stage('Checking Availability'){
         echo "Checking if app is alive"
     }
-
 
 }
