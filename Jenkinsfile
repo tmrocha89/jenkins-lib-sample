@@ -38,7 +38,7 @@ node{
         compiler.addProject(Config["solution"])
         .setToRebuild()
         .addParameter("/p:DeployOnBuild=true")
-        .addParameter("/p:PublishProfile=testtmdeploy - Web Deploy")
+        .addParameter("/p:PublishProfile=\"testtmdeploy - Web Deploy\"")
         .run();
     }
 
