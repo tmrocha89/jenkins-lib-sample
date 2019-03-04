@@ -28,18 +28,14 @@ node{
 
     stage('Deploy'){
         echo "Deploying app"
-
-        //withCredentials([string(credentialsId: 'azure_deleteproject_envXPTO', variable: 'PASSWORD')]) {
-            win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
-            compiler.addProject(Config["solution"])
-            .setToRebuild()
-            .setDeployOnBuild()
-            .setPublishProfileByName("testtmdeploy - Web Deploy")
-            .setPassword("azure_deleteproject_envXPTO")
-            .setConfiguration("Release")
-            .run();
-        //}
-
+        win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
+        compiler.addProject(Config["solution"])
+        .setToRebuild()
+        .setDeployOnBuild()
+        .setPublishProfileByName("testtmdeploy - Web Deploy")
+        .setPassword("azure_deleteproject_envXPTO")
+        .setConfiguration("Release")
+        .run();
     }
 
     stage('Checking Availability'){
