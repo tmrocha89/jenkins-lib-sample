@@ -27,6 +27,11 @@ node{
 
     stage('Deploy'){
         echo "Deploying app"
+        win.thebatman.tmrjenkinslib.compression.ICompressionBuilder compression = new win.thebatman.tmrjenkinslib.compression.ZipCompressionBuilder(this);
+        compression.setFileName("app.zip")
+                    .setDirectory("./")
+                    .addFilePatternToExclude("*.zip")
+                    .compress()
     }
 
     stage('Checking Availability'){
