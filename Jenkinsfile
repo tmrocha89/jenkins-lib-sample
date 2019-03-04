@@ -39,6 +39,7 @@ node{
         .setToRebuild()
         .addParameter("/p:DeployOnBuild=true")
         .addParameter("/p:PublishProfile=testtmdeploy - Web Deploy")
+        .run();
     }
 
     stage('Checking Availability'){
