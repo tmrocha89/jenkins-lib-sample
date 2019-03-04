@@ -17,7 +17,7 @@ node{
     stage('build'){
         win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
         compiler.addProject(Config["solution"])
-                .addParameter("/t:Restore")
+                .setToRestore()
                 .setToRebuild()
                 .run();
     }
@@ -28,21 +28,17 @@ node{
 
     stage('Deploy'){
         echo "Deploying app"
-        //win.thebatman.tmrjenkinslib.compression.ICompressionBuilder compression = new win.thebatman.tmrjenkinslib.compression.ZipCompressionBuilder(this);
-        //compression.setFileName("app.zip")
-        //            .setDirectory("./")
-        //            .compress()
 
-        withCredentials([string(credentialsId: 'azure_deleteproject_envXPTO', variable: 'PASSWORD')]) {
+        //withCredentials([string(credentialsId: 'azure_deleteproject_envXPTO', variable: 'PASSWORD')]) {
             win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
             compiler.addProject(Config["solution"])
             .setToRebuild()
-            .addParameter("/p:DeployOnBuild=true")
-            .addParameter("/p:PublishProfile=\"testtmdeploy - Web Deploy\"")
-            .addParameter("/p:Password=\"$PASSWORD\"")
+            .setDeployOnBuild()
+            .setPublishProfileByName("testtmdeploy - Web Deploy")
+            .setPassword("azure_deleteproject_envXPTO")
             .setConfiguration("Release")
             .run();
-        }
+        //}
 
     }
 
