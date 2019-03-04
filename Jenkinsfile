@@ -17,6 +17,7 @@ node{
     stage('build'){
         win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
         compiler.addProject(Config["solution"])
+                .addParameter("/t:Restore")
                 .setToRebuild()
                 .run();
     }
