@@ -32,14 +32,17 @@ node{
         //            .setDirectory("./")
         //            .compress()
 
-        writeFile file: './teste.publishsettings', text: 'asdads'
+        withCredentials([string(credentialsId: 'azure_deleteproject_envXPTO', variable: 'PASSWORD')]) {
+            win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
+            compiler.addProject(Config["solution"])
+            .setToRebuild()
+            .addParameter("/p:DeployOnBuild=true")
+            .addParameter("/p:PublishProfile=\"testtmdeploy - Web Deploy\"")
+            .addParameter("/p:Password=\"$PASSWORD\"")
+            .setConfiguration("Release")
+            .run();
+        }
 
-        win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
-        compiler.addProject(Config["solution"])
-        .setToRebuild()
-        .addParameter("/p:DeployOnBuild=true")
-        .addParameter("/p:PublishProfile=\"testtmdeploy - Web Deploy\"")
-        .run();
     }
 
     stage('Checking Availability'){
