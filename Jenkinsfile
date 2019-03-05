@@ -9,12 +9,12 @@ node{
     def msbuildTool = tool 'msbuild'
     win.thebatman.tmrjenkinslib.platformRunners.IPlatformRunner runner = new win.thebatman.tmrjenkinslib.platformRunners.WindowsPlatformRunner(this);
 
-    stage('checkout'){
+    SafeStage('checkout'){
         win.thebatman.tmrjenkinslib.versionControl.IVersionControlSystem git = new win.thebatman.tmrjenkinslib.versionControl.GitVersionControlSystem(this, runner);
         git.CloneCurrentProject()
     }
 
-    stage('build'){
+    SafeStage('build'){
         win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
         compiler.addProject(Config["solution"])
                 .setToRestore()
@@ -22,11 +22,11 @@ node{
                 .run();
     }
 
-    stage('Tests'){
+    SafeStage('Tests'){
         echo "Not implemented yet"
     }
 
-    stage('Deploy'){
+    SafeStage('Deploy'){
         echo "Deploying app"
         win.thebatman.tmrjenkinslib.compilers.ICompiler compiler = new win.thebatman.tmrjenkinslib.compilers.MsBuildBuilder(msbuildTool, this, runner);
         compiler.addProject(Config["solution"])
@@ -38,7 +38,7 @@ node{
         .run();
     }
 
-    stage('Checking Availability'){
+    SafeStage('Checking Availability'){
         echo "Checking if app is alive"
     }
 
